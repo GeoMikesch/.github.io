@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" type="text/css" crossorigin="">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" crossorigin=""></script>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Bezirke_Berlin_2023_1.js"></script>
+        <script src="data/Ortsteile_Berlin_Alkis_2.js"></script>
+        <script src="data/Bodenrichtwerte_3.js"></script>
+        <script src="data/Landesgrenze_Berlin_ALKIS_4.js"></script>
+        <script type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        
+
+        <script>
+            
+            var map = L.map('map', {
+                zoomControl:true, maxZoom:19, minZoom:5
+            }).fitBounds([[51.3594, 11.2686],[53.5583, 14.7658]]);
+        
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+
+        
+
+
+
+
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 399; // Lower than the WMS layer's pane
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_Bezirke_Berlin_2023_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nr'] !== null ? autolinker.link(feature.properties['nr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Bezirke_Berlin_2023_1_0() {
+            return {
+                pane: 'pane_Bezirke_Berlin_2023_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Bezirke_Berlin_2023_1');
+        map.getPane('pane_Bezirke_Berlin_2023_1').style.zIndex = 401;
+        map.getPane('pane_Bezirke_Berlin_2023_1').style['mix-blend-mode'] = 'normal';
+        var layer_Bezirke_Berlin_2023_1 = new L.geoJson(json_Bezirke_Berlin_2023_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Bezirke_Berlin_2023_1',
+            layerName: 'layer_Bezirke_Berlin_2023_1',
+            pane: 'pane_Bezirke_Berlin_2023_1',
+            onEachFeature: pop_Bezirke_Berlin_2023_1,
+            style: style_Bezirke_Berlin_2023_1_0,
+        });
+        bounds_group.addLayer(layer_Bezirke_Berlin_2023_1);
+        map.addLayer(layer_Bezirke_Berlin_2023_1);
+        function pop_Ortsteile_Berlin_Alkis_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['uuid'] !== null ? autolinker.link(feature.properties['uuid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['sch'] !== null ? autolinker.link(feature.properties['sch'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? autolinker.link(feature.properties['nam'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gdf'] !== null ? autolinker.link(feature.properties['gdf'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['bezeich'] !== null ? autolinker.link(feature.properties['bezeich'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Ortsteile_Berlin_Alkis_2_0() {
+            return {
+                pane: 'pane_Ortsteile_Berlin_Alkis_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Ortsteile_Berlin_Alkis_2');
+        map.getPane('pane_Ortsteile_Berlin_Alkis_2').style.zIndex = 402;
+        map.getPane('pane_Ortsteile_Berlin_Alkis_2').style['mix-blend-mode'] = 'normal';
+        var layer_Ortsteile_Berlin_Alkis_2 = new L.geoJson(json_Ortsteile_Berlin_Alkis_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Ortsteile_Berlin_Alkis_2',
+            layerName: 'layer_Ortsteile_Berlin_Alkis_2',
+            pane: 'pane_Ortsteile_Berlin_Alkis_2',
+            onEachFeature: pop_Ortsteile_Berlin_Alkis_2,
+            style: style_Ortsteile_Berlin_Alkis_2_0,
+        });
+        bounds_group.addLayer(layer_Ortsteile_Berlin_Alkis_2);
+        map.addLayer(layer_Ortsteile_Berlin_Alkis_2);
+        function pop_Bodenrichtwerte_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">gemeinde</th>\
+                        <td>' + (feature.properties['gemeinde'] !== null ? autolinker.link(feature.properties['gemeinde'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">bezirk</th>\
+                        <td>' + (feature.properties['bezirk'] !== null ? autolinker.link(feature.properties['bezirk'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['anwert'] !== null ? autolinker.link(feature.properties['anwert'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">brw</th>\
+                        <td>' + (feature.properties['brw'] !== null ? autolinker.link(feature.properties['brw'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">nutzung</th>\
+                        <td>' + (feature.properties['nutzung'] !== null ? autolinker.link(feature.properties['nutzung'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">gfz</th>\
+                        <td>' + (feature.properties['gfz'] !== null ? autolinker.link(feature.properties['gfz'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['verfahrensart'] !== null ? autolinker.link(feature.properties['verfahrensart'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['stichtag'] !== null ? autolinker.link(feature.properties['stichtag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['beitragszustand'] !== null ? autolinker.link(feature.properties['beitragszustand'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lumnum'] !== null ? autolinker.link(feature.properties['lumnum'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Bodenrichtwerte_3_0() {
+            return {
+                pane: 'pane_Bodenrichtwerte_3',
+                opacity: 1,
+                color: 'rgba(254,158,25,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Bodenrichtwerte_3');
+        map.getPane('pane_Bodenrichtwerte_3').style.zIndex = 403;
+        map.getPane('pane_Bodenrichtwerte_3').style['mix-blend-mode'] = 'normal';
+        var layer_Bodenrichtwerte_3 = new L.geoJson(json_Bodenrichtwerte_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Bodenrichtwerte_3',
+            layerName: 'layer_Bodenrichtwerte_3',
+            pane: 'pane_Bodenrichtwerte_3',
+            onEachFeature: pop_Bodenrichtwerte_3,
+            style: style_Bodenrichtwerte_3_0,
+        });
+        bounds_group.addLayer(layer_Bodenrichtwerte_3);
+        map.addLayer(layer_Bodenrichtwerte_3);
+        function pop_Landesgrenze_Berlin_ALKIS_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['namlan'] !== null ? autolinker.link(feature.properties['namlan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lan'] !== null ? autolinker.link(feature.properties['lan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Landesgrenze_Berlin_ALKIS_4_0() {
+            return {
+                pane: 'pane_Landesgrenze_Berlin_ALKIS_4',
+                opacity: 1,
+                color: 'rgba(215,25,28,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Landesgrenze_Berlin_ALKIS_4');
+        map.getPane('pane_Landesgrenze_Berlin_ALKIS_4').style.zIndex = 404;
+        map.getPane('pane_Landesgrenze_Berlin_ALKIS_4').style['mix-blend-mode'] = 'normal';
+        var layer_Landesgrenze_Berlin_ALKIS_4 = new L.geoJson(json_Landesgrenze_Berlin_ALKIS_4, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Landesgrenze_Berlin_ALKIS_4',
+            layerName: 'layer_Landesgrenze_Berlin_ALKIS_4',
+            pane: 'pane_Landesgrenze_Berlin_ALKIS_4',
+            onEachFeature: pop_Landesgrenze_Berlin_ALKIS_4,
+            style: style_Landesgrenze_Berlin_ALKIS_4_0,
+        });
+        bounds_group.addLayer(layer_Landesgrenze_Berlin_ALKIS_4);
+        map.addLayer(layer_Landesgrenze_Berlin_ALKIS_4);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_Bodenrichtwerte_3,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'gfz'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+
+
+        // Create a new pane for the WMS layer and set its z-index
+        map.createPane('pane_WMSLayer');
+        map.getPane('pane_WMSLayer').style.zIndex = 405; // Higher than existing panes
+
+        // Create WMS layer
+        var wmsLayer = L.tileLayer.wms('http://31.37.114.196:3000/geoserver/MyWorkspace/wms', {
+        layers: 'MyWorkspace:Immobilien Berlin',
+        format: 'image/png',
+        transparent: true,
+        version: '1.1.0',
+        pane: 'pane_WMSLayer' // Specify the custom pane for the WMS layer
+        });
+
+        // Add WMS layer to map
+        wmsLayer.addTo(map);
+
+        
+
+        // Define event handler function for click events and register it
+        function Identify(e) {
+        // Set parameters needed for GetFeatureInfo WMS request
+        var sw = map.options.crs.project(map.getBounds().getSouthWest());
+        var ne = map.options.crs.project(map.getBounds().getNorthEast());
+        var BBOX = sw.x + "," + sw.y + "," + ne.x + "," + ne.y;
+        var WIDTH = map.getSize().x;
+        var HEIGHT = map.getSize().y;
+        var X = Math.trunc(map.layerPointToContainerPoint(e.layerPoint).x);
+        var Y = Math.trunc(map.layerPointToContainerPoint(e.layerPoint).y);
+
+        // Compose the URL for the request
+        var URL = 'http://31.37.114.196:3000/geoserver/MyWorkspace/wms?SERVICE=WMS&VERSION=1.1.0&REQUEST=GetFeatureInfo&LAYERS=MyWorkspace:Immobilien Berlin&QUERY_LAYERS=MyWorkspace:Immobilien Berlin&BBOX=' + BBOX + '&FEATURE_COUNT=1&HEIGHT=' + HEIGHT + '&WIDTH=' + WIDTH + '&INFO_FORMAT=application%2Fjson&TILED=false&SRS=EPSG%3A3857&X=' + X + '&Y=' + Y;
+
+
+
+        
+        // Send GetFeatureInfo as an asynchronous HTTP request using jQuery $.ajax
+        $.ajax({
+            url: URL,
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+            if (data.features.length !== 0) { // At least one feature returned in response
+                var returnedFeature = data.features[0]; // First feature from response
+
+                // Set up popup for clicked feature and open it
+                var popup = new L.Popup({
+                maxWidth: 300
+                });
+
+                // Customize the content of the popup according to the feature properties
+                popup.setContent(
+                    "<b>Bezirk:</b> " + returnedFeature.properties.bezgfk + "<br />" +
+                    "<b>Flurstück:</b> " + returnedFeature.properties.fln_flurst + "<br />" +
+                    "<b>Gemarkung:</b> " + returnedFeature.properties.gmk_flurst + "<br />" +
+                    "<b>Gebäudefläche:</b> " + returnedFeature.properties.Gebäudefl + "<br />" +
+                    "<b>Grundstück:</b> " + returnedFeature.properties['Grundst�_1']
+                    );
+                popup.setLatLng(e.latlng);
+                map.openPopup(popup);
+            }
+            }
+        });
+        }
+
+        map.addEventListener('click', Identify);
+
+        map.createPane('pane_WMSLayer2');
+        map.getPane('pane_WMSLayer2').style.zIndex = 405; // Higher than existing panes
+
+        // Create WMS layer2
+        var wmsLayer2 = L.tileLayer.wms('http://31.37.114.196:3000/geoserver/MyWorkspace/wms', {
+        layers: 'MyWorkspace:Immobilien BG Joined',
+        format: 'image/png',
+        transparent: true,
+        version: '1.1.0',
+        pane: 'pane_WMSLayer2' // Specify the custom pane for the WMS layer
+        });
+
+        // Add WMS layer to map
+        wmsLayer2.addTo(map);
+
+        function Identify1(e) {
+        // Set parameters needed for GetFeatureInfo WMS request
+        var sw = map.options.crs.project(map.getBounds().getSouthWest());
+        var ne = map.options.crs.project(map.getBounds().getNorthEast());
+        var BBOX = sw.x + "," + sw.y + "," + ne.x + "," + ne.y;
+        var WIDTH = map.getSize().x;
+        var HEIGHT = map.getSize().y;
+        var X = Math.trunc(map.layerPointToContainerPoint(e.layerPoint).x);
+        var Y = Math.trunc(map.layerPointToContainerPoint(e.layerPoint).y);
+
+        // Compose the URL for the request
+        var URL1 = 'http://31.37.114.196:3000/geoserver/MyWorkspace/wms?SERVICE=WMS&VERSION=1.1.0&REQUEST=GetFeatureInfo&LAYERS=MyWorkspace:Immobilien BG Joined&QUERY_LAYERS=MyWorkspace:Immobilien BG Joined&BBOX=' + BBOX + '&FEATURE_COUNT=1&HEIGHT=' + HEIGHT + '&WIDTH=' + WIDTH + '&INFO_FORMAT=application%2Fjson&TILED=false&SRS=EPSG%3A3857&X=' + X + '&Y=' + Y;
+
+        $.ajax({
+            url: URL1,
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+            if (data.features.length !== 0) { // At least one feature returned in response
+                var returnedFeature = data.features[0]; // First feature from response
+
+                // Set up popup for clicked feature and open it
+                var popup = new L.Popup({
+                maxWidth: 300
+                });
+
+                // Customize the content of the popup according to the feature properties
+                popup.setContent(
+                    "<b>Funktion:</b> " + returnedFeature.properties.funktion + "<br />" +
+                    "<b>Geschosszahl-Max:</b> " + returnedFeature.properties['Geschosszahl-Max'] + "<br />" +
+                    "<b>Bodenrichtwert:</b> " + returnedFeature.properties.Bodenrichtwert + "<br />" +
+                    "<b>Ortsteil:</b> " + returnedFeature.properties.Ortsteil + "<br />" +
+                    "<b>Nutzungsart:</b> " + returnedFeature.properties.Nutzungsart
+                );
+                popup.setLatLng(e.latlng);
+                map.openPopup(popup);
+            }
+            }
+        });
+        }
+
+        map.addEventListener('click', Identify1);
+
+        map.createPane('pane_Landesgrenze');
+        map.getPane('pane_Landesgrenze').style.zIndex = 410; 
+
+
+        var wmsLandesgrenze = L.tileLayer.wms('http://31.37.114.196:3000/geoserver/MyWorkspace/wms', {
+        layers: 'MyWorkspace:Landesgrenze Brandenburg',
+        format: 'image/png',
+        transparent: true,
+        version: '1.1.0',
+        pane: 'pane_Landesgrenze' // Specify the custom pane for the WMS layer
+        });
+
+        // Add WMS layer to map
+        wmsLandesgrenze.addTo(map);
+
+
+        map.createPane('pane_Ort');
+        map.getPane('pane_Ort').style.zIndex = 407; 
+
+        var wmsOrtsteileBG = L.tileLayer.wms('http://31.37.114.196:3000/geoserver/geoserver/MyWorkspace/wms', {
+        layers: 'MyWorkspace:Ortsteile Brandenburg',
+        format: 'image/png',
+        transparent: true,
+        version: '1.1.0',
+        pane: 'pane_Ort' // Specify the custom pane for the WMS layer
+        });
+
+        map.createPane('pane_Bezirk');
+        map.getPane('pane_Bezirk').style.zIndex = 408; 
+
+        var wmsBezirkeBG = L.tileLayer.wms('http://31.37.114.196:3000/geoserver/MyWorkspace/wms', {
+        layers: 'MyWorkspace:Gemeindegrenzen Brandenburg',
+        format: 'image/png',
+        transparent: true,
+        version: '1.1.0',
+        pane: 'pane_Bezirk'
+        });
+
+
+        // Add WMS layer to map
+        wmsBezirkeBG.addTo(map);
+
+        map.createPane('pane_BRW');
+        map.getPane('pane_BRW').style.zIndex = 409; 
+
+        var wmsBodenrichtwerteBG= L.tileLayer.wms('http://31.37.114.196:3000/geoserver/MyWorkspace/wms', {
+        layers: 'MyWorkspace:Bodenrichtwerte Brandenburg',
+        format: 'image/png',
+        transparent: true,
+        version: '1.1.0',
+        pane: 'pane_BRW' // Specify the custom pane for the WMS layer
+        });
+
+        // Add WMS layer to map
+        wmsBodenrichtwerteBG.addTo(map);
+
+
+
+
+        // Add the WMS layer to the map
+        
+
+        // Optional: Add the WMS layer to the layer control (replace the existing layer control code)
+        var overlayMaps = {
+            'OpenStreetMap': layer_OSMStandard_0,
+            'Landesgrenze': wmsLandesgrenze,
+            'Bodenrichtwerte': layer_Bodenrichtwerte_3,
+            'Ortsteile Berlin': layer_Ortsteile_Berlin_Alkis_2,
+            'Bezirke Berlin': layer_Bezirke_Berlin_2023_1,
+            'Immobilien Berlin': wmsLayer,
+            'Bodenrichtwerte Brandenburg': wmsBodenrichtwerteBG,
+            'Immobilien Brandenburg': wmsLayer2,
+            'Ortsteile Brandenburg': wmsOrtsteileBG,
+            'Gemeindegrenzen Brandenburg': wmsBezirkeBG
+            
+        };
+
+        L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
+
+        function updateLayerVisibility() {
+            var currentZoom = map.getZoom();
+
+            // Immobilien Berlin WMS Layer (Example: visible between zoom levels 1 to 19)
+            if (currentZoom >= 15 && currentZoom <= 23) {
+                wmsLayer.addTo(map);
+            } else {
+                map.removeLayer(wmsLayer);
+            }
+
+            if (currentZoom >= 15 && currentZoom <= 19) {
+                wmsLayer2.addTo(map);
+            } else {
+                map.removeLayer(wmsLayer2);
+            }
+
+            // Bodenrichtwerte Layer (Example: visible between zoom levels 10 to 15)
+            if (currentZoom >= 12 && currentZoom <= 14) {
+                layer_Bodenrichtwerte_3.addTo(map);
+            } else {
+                map.removeLayer(layer_Bodenrichtwerte_3);
+            }
+
+            if (currentZoom >= 12 && currentZoom <= 14) {
+                wmsBodenrichtwerteBG.addTo(map);
+            } else {
+                map.removeLayer(wmsBodenrichtwerteBG);
+            }
+
+            // Landesgrenze_Berlin_ALKIS Layer (Example: visible between zoom levels 5 to 9)
+            if (currentZoom >= 5 && currentZoom <= 10) {
+                layer_Landesgrenze_Berlin_ALKIS_4.addTo(map);
+            } else {
+                map.removeLayer(layer_Landesgrenze_Berlin_ALKIS_4);
+            }
+
+            if (currentZoom >= 5 && currentZoom <= 10) {
+                wmsLandesgrenze.addTo(map);
+            } else {
+                map.removeLayer(wmsLandesgrenze);
+            }
+
+            // Bezirke_Berlin_2023 Layer (Example: visible between zoom levels 8 to 12)
+            if (currentZoom >= 9 && currentZoom <= 12) {
+                layer_Bezirke_Berlin_2023_1.addTo(map);
+            } else {
+                map.removeLayer(layer_Bezirke_Berlin_2023_1);
+            }
+
+            if (currentZoom >= 9 && currentZoom <= 12) {
+                wmsBezirkeBG.addTo(map);
+            } else {
+                map.removeLayer(wmsBezirkeBG);
+            }
+
+            // Ortsteile_Berlin_Alkis Layer (Example: visible between zoom levels 12 to 16)
+            if (currentZoom >= 12 && currentZoom <= 16) {
+                layer_Ortsteile_Berlin_Alkis_2.addTo(map);
+            } else {
+                map.removeLayer(layer_Ortsteile_Berlin_Alkis_2);
+            }
+
+            if (currentZoom >= 12 && currentZoom <= 16) {
+                wmsOrtsteileBG.addTo(map);
+            } else {
+                map.removeLayer(wmsOrtsteileBG);
+            }
+        }
+
+
+            // Call the update function initially to set the correct visibility
+        updateLayerVisibility();
+
+            // Add an event listener to the map's zoomend event to update layer visibility when zooming
+        map.on('zoomend', updateLayerVisibility);
+
+
+
+    
+
+        </script>
+    </body>
+</html>
